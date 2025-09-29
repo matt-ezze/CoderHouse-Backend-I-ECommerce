@@ -4,8 +4,16 @@
   "description": "Coder House E-Commerce Project",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "test": "npx mocha"
   },
   "author": "Matias Sosa",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "chai": "^6.2.0",
+    "mocha": "^11.7.2"
+  }
 }
