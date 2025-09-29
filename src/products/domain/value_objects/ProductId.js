@@ -1,5 +1,14 @@
+const crypto = require('crypto');
+
 class ProductId {
 	#value;
+
+	/**
+	 * @returns {ProductId}
+	 */
+	static generate() {
+		return new ProductId(crypto.randomUUID());
+	}
 
 	/**
 	 * @param {string} value
