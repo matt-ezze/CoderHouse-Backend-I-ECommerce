@@ -183,7 +183,18 @@ class Product {
 	 * @returns {ProductThumbnail[]}
 	 */
 	getThumbnails() {
-		return this.#thumbnails;
+		return [...this.#thumbnails];
+	}
+
+	/**
+	 * @param {ProductThumbnail[]} newThumbnails
+	 * @returns {Product}
+	 */
+	updateThumbnails(newThumbnails) {
+		return new Product({
+			...this.#getValues(),
+			thumbnails: newThumbnails
+		});
 	}
 
 	#getValues() {
@@ -196,7 +207,7 @@ class Product {
 			status: this.#status,
 			stock: this.#stock,
 			category: this.#category,
-			thumbnails: this.#thumbnails.map(thumbnail => thumbnail.getValue())
+			thumbnails: this.#thumbnails
 		};
 	}
 }
