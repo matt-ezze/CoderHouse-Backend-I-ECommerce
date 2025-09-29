@@ -23,3 +23,5 @@ class ProductStatus {
 		return this.#value === other.getValue();
 	}
 }
+
+module.exports = ProductStatus;
