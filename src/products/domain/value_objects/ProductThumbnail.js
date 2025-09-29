@@ -2,10 +2,10 @@ class ProductThumbnail {
 	#value;
 
 	/**
-	 * @param {URL} value 
+	 * @param {string|URL} value 
 	 */
 	constructor(value) {
-		this.#value = value;
+		this.#value = typeof value === 'string' ? new URL(value) : value;
 	}
 
 	/**
