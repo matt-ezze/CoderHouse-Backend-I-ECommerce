@@ -9,6 +9,9 @@ mocha.describe('ProductDescription value object', () => {
 		const invalidDescription = 'a'.repeat(ProductDescription.MAX_LENGTH + 1);
 
 		// Act & Assert
-		chai.expect(() => new ProductDescription(invalidDescription)).to.throw(InvalidProductDescriptionException);
+		chai.expect(() => new ProductDescription(invalidDescription)).to.throw(
+			InvalidProductDescriptionException,
+			InvalidProductDescriptionException.getDescriptionExceedsMaxLength(ProductDescription.MAX_LENGTH).message
+		);
 	});
 });

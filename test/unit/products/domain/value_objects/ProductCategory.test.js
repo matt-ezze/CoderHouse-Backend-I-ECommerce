@@ -9,6 +9,9 @@ mocha.describe('ProductCategory value object', () => {
 		const invalidCategory = 'a'.repeat(ProductCategory.MAX_LENGTH + 1);
 
 		// Act & Assert
-		chai.expect(() => new ProductCategory(invalidCategory)).to.throw(InvalidProductCategory);
+		chai.expect(() => new ProductCategory(invalidCategory)).to.throw(
+			InvalidProductCategory,
+			InvalidProductCategory.getCategoryExceedsMaxLength(ProductCategory.MAX_LENGTH).message
+		);
 	});
 });
