@@ -9,6 +9,7 @@ class ProductCategory {
 	 * @param {string} value 
 	 */
 	constructor(value) {
+		this.#validateValue(value);
 		this.#value = value;
 	}
 
