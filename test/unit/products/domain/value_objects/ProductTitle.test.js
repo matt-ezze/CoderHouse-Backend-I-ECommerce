@@ -1,7 +1,7 @@
+const InvalidProductTitleException = require('../../../../../src/products/domain/exceptions/InvalidProductTitleException');
+const ProductTitle = require('../../../../../src/products/domain/value_objects/ProductTitle');
 const chai = require('chai');
 const mocha = require('mocha');
-const ProductTitle = require('../../../../../src/products/domain/value_objects/ProductTitle');
-const InvalidProductTitleException = require('../../../../../src/products/domain/exceptions/InvalidProductTitleException');
 
 mocha.describe('ProductTitle value object', () => {
 	mocha.it('When creating a ProductTitle instance with an empty value, it should throw an InvalidProductTitle exception stating that the title cannot be empty', () => {
