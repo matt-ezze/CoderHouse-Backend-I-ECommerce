@@ -96,6 +96,8 @@ storybook-static/
 # Temporary files
 tmp/
 temp/
+.tmp/
+.temp/
 *.swp
 *.swo
 
