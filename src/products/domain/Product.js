@@ -21,7 +21,7 @@ class Product {
 
 	static fromJson(productJson) {
 		return new Product({
-			id: new ProductId(productJson.id),
+			id: productJson.id ? new ProductId(productJson.id) : ProductId.generate(),
 			title: new ProductTitle(productJson.title),
 			description: new ProductDescription(productJson.description),
 			price: new ProductPrice(productJson.price),
