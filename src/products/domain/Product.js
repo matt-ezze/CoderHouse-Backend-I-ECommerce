@@ -197,6 +197,17 @@ class Product {
 		});
 	}
 
+	toJson() {
+		return Object.fromEntries(
+			Object.entries(this.#getValues()).map(([key, value]) => {
+				if (Array.isArray(value)) {
+					return [key, value.map(v => v.getValue())];
+				}
+				return [key, value.getValue()];
+			})
+		);
+	}
+
 	#getValues() {
 		return {
 			id: this.#id,
