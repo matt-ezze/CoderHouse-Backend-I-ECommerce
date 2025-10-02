@@ -1,3 +1,4 @@
+const ProductId = require("../../products/domain/value_objects/ProductId");
 const CartId = require("./value_objects/CartId");
 const CartProduct = require("./value_objects/CartProduct");
 
@@ -42,6 +43,14 @@ class Cart {
 	}
 
 	/**
+	 * @param {ProductId} productId
+	 * @returns {boolean}
+	 */
+	hasProduct(productId) {
+		return this.#products.has(productId.getValue());
+	}
+
+	/**
 	 * @param {CartProduct} cartProduct
 	 * @returns {Cart}
 	 */
@@ -54,6 +63,18 @@ class Cart {
 		} else {
 			updatedProducts.set(cartProduct.getId(), cartProduct);
 		}
+		return new Cart({ id: this.#id, products: updatedProducts });
+	}
+
+	/**
+	 * @param {ProductId} productId
+	 */
+	removeProduct(productId) {
+		if (!this.#products.has(productId.getValue())) {
+			return this;
+		}
+		const updatedProducts = new Map(this.#products);
+		updatedProducts.delete(productId.getValue());
 		return new Cart({ id: this.#id, products: updatedProducts });
 	}
 
