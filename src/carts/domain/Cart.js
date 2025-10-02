@@ -9,7 +9,7 @@ class Cart {
 	static fromJson(json) {
 		const id = new CartId(json.id);
 		const products = json.products.map(productJson => CartProduct.fromJson(productJson));
-		return new Cart(id, products);
+		return new Cart({ id, products: this.#createProductMap(products) });
 	}
 
 	#id;
@@ -18,11 +18,11 @@ class Cart {
 	/**
 	 * @param {Object} param
 	 * @param {CartId} param.id
-	 * @param {CartProduct[]} param.products
+	 * @param {Map<string, CartProduct>} param.products
 	 */
-	constructor({ id, products = [] }) {
+	constructor({ id, products = new Map() }) {
 		this.#id = id;
-		this.#products = this.#createProductMap(products);
+		this.#products = products;
 	}
 
 	/**
@@ -40,13 +40,19 @@ class Cart {
 	}
 
 	/**
-	 * @param {CartProduct[]} [products]
-	 * @returns {Cart}
+	 * @param {CartProduct} cartProduct
 	 */
-	updateProducts(products) {
-		return products !== undefined
-			? new Cart({ id: this.#id, products })
-			: this;
+	addProduct(cartProduct) {
+		const previousCartProduct = this.#products.get(cartProduct.getProductId().getValue());
+		if (previousCartProduct) {
+			const newQuantity = previousCartProduct.getQuantity() + cartProduct.getQuantity();
+			this.#products.set(cartProduct.getProductId().getValue(), new CartProduct({
+				productId: cartProduct.getProductId(),
+				quantity: newQuantity
+			}));
+		} else {
+			this.#products.set(cartProduct.getProductId().getValue(), cartProduct);
+		}
 	}
 
 	toJson() {
@@ -81,7 +87,7 @@ class Cart {
 	/**
 	 * @param {CartProduct[]} products 
 	 */
-	#createProductMap(products) {
+	static #createProductMap(products) {
 		const map = new Map();
 		for (const product of products) {
 			map.set(product.getProductId().getValue(), product);
