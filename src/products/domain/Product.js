@@ -72,14 +72,16 @@ class Product {
 	}
 
 	/**
-	 * @param {ProductTitle} newTitle 
+	 * @param {ProductTitle} [newTitle] 
 	 * @returns {Product}
 	 */
 	updateTitle(newTitle) {
-		return new Product({
-			...this.#getValues(),
-			title: newTitle
-		});
+		return newTitle
+			? new Product({
+				...this.#getValues(),
+				title: newTitle
+			})
+			: this;
 	}
 
 	/**
@@ -90,14 +92,16 @@ class Product {
 	}
 
 	/**
-	 * @param {ProductDescription} newDescription
+	 * @param {ProductDescription} [newDescription]
 	 * @returns {Product}
 	 */
 	updateDescription(newDescription) {
-		return new Product({
-			...this.#getValues(),
-			description: newDescription
-		});
+		return newDescription
+			? new Product({
+				...this.#getValues(),
+				description: newDescription
+			})
+			: this;
 	}
 
 	/**
@@ -115,14 +119,16 @@ class Product {
 	}
 
 	/**
-	 * @param {ProductPrice} newPrice
+	 * @param {ProductPrice} [newPrice]
 	 * @returns {Product}
 	 */
 	updatePrice(newPrice) {
-		return new Product({
-			...this.#getValues(),
-			price: newPrice
-		});
+		return newPrice
+			? new Product({
+				...this.#getValues(),
+				price: newPrice
+			})
+			: this;
 	}
 
 	/**
@@ -133,14 +139,16 @@ class Product {
 	}
 
 	/**
-	 * @param {boolean} newStatus
+	 * @param {boolean} [newStatus]
 	 * @returns {Product}
 	 */
 	updateStatus(newStatus) {
-		return new Product({
-			...this.#getValues(),
-			status: newStatus
-		});
+		return newStatus
+			? new Product({
+				...this.#getValues(),
+				status: newStatus
+			})
+			: this;
 	}
 
 	/**
@@ -151,14 +159,16 @@ class Product {
 	}
 
 	/**
-	 * @param {ProductStock} newStock
+	 * @param {ProductStock} [newStock]
 	 * @returns {Product}
 	 */
 	updateStock(newStock) {
-		return new Product({
-			...this.#getValues(),
-			stock: newStock
-		});
+		return newStock
+			? new Product({
+				...this.#getValues(),
+				stock: newStock
+			})
+			: this;
 	}
 
 	/**
@@ -169,14 +179,16 @@ class Product {
 	}
 
 	/**
-	 * @param {ProductCategory} newCategory
+	 * @param {ProductCategory} [newCategory]
 	 * @returns {Product}
 	 */
 	updateCategory(newCategory) {
-		return new Product({
-			...this.#getValues(),
-			category: newCategory
-		});
+		return newCategory
+			? new Product({
+				...this.#getValues(),
+				category: newCategory
+			})
+			: this;
 	}
 
 	/**
@@ -187,13 +199,28 @@ class Product {
 	}
 
 	/**
-	 * @param {ProductThumbnail[]} newThumbnails
+	 * @param {ProductThumbnail[]} [newThumbnails]
 	 * @returns {Product}
 	 */
 	updateThumbnails(newThumbnails) {
-		return new Product({
-			...this.#getValues(),
-			thumbnails: newThumbnails
+		return newThumbnails
+			? new Product({
+				...this.#getValues(),
+				thumbnails: newThumbnails
+			})
+			: this;
+	}
+
+	isEqual(other) {
+		return Object.entries(this.#getValues()).every(([key, value]) => {
+			const otherValue = other.#getValues()[key];
+			if (Array.isArray(value) && Array.isArray(otherValue)) {
+				if (value.length !== otherValue.length) {
+					return false;
+				}
+				return value.every((v, index) => v.isEqual(otherValue[index]));
+			}
+			return value.isEqual(otherValue);
 		});
 	}
 
