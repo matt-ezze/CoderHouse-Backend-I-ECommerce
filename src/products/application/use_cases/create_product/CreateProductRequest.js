@@ -17,16 +17,20 @@ class CreateProductRequest {
 	#category;
 	#thumbnails;
 
+	/**
+	 * @param {Object} json 
+	 * @returns {CreateProductRequest}
+	 */
 	static fromJson(json) {
 		return new CreateProductRequest({
-			title: new ProductTitle(data.title),
-			description: new ProductDescription(data.description),
-			code: new ProductCode(data.code),
-			price: new ProductPrice(data.price),
-			status: new ProductStatus(data.status),
-			stock: new ProductStock(data.stock),
-			category: new ProductCategory(data.category),
-			thumbnails: data.thumbnails?.map(thumbnail => new ProductThumbnail(thumbnail))
+			title: new ProductTitle(json.title),
+			description: new ProductDescription(json.description),
+			code: new ProductCode(json.code),
+			price: new ProductPrice(json.price),
+			status: new ProductStatus(json.status),
+			stock: new ProductStock(json.stock),
+			category: new ProductCategory(json.category),
+			thumbnails: json.thumbnails?.map(thumbnail => new ProductThumbnail(thumbnail))
 		});
 	}
 
