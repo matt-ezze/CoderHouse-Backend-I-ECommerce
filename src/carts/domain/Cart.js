@@ -22,7 +22,7 @@ class Cart {
 	 */
 	constructor({ id, products = [] }) {
 		this.#id = id;
-		this.#products = products;
+		this.#products = this.#createProductMap(products);
 	}
 
 	/**
@@ -33,7 +33,7 @@ class Cart {
 	}
 
 	/**
-	 * @returns {CartProduct[]}
+	 * @returns {Map<string, CartProduct>}
 	 */
 	getProducts() {
 		return this.#products;
@@ -76,6 +76,17 @@ class Cart {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @param {CartProduct[]} products 
+	 */
+	#createProductMap(products) {
+		const map = new Map();
+		for (const product of products) {
+			map.set(product.getProductId().getValue(), product);
+		}
+		return map;
 	}
 }
 
