@@ -72,17 +72,14 @@ class Cart {
 		if (!this.#id.isEqual(other.#id)) {
 			return false;
 		}
-
-		if (this.#products.length !== other.#products.length) {
+		if (this.#products.size !== other.#products.size) {
 			return false;
 		}
-
-		for (let i = 0; i < this.#products.length; i++) {
-			if (!this.#products[i].isEqual(other.#products[i])) {
+		for (const [key, value] of this.#products.entries()) {
+			if (!value.isEqual(other.#products.get(key))) {
 				return false;
 			}
 		}
-
 		return true;
 	}
 
