@@ -41,24 +41,27 @@ class Cart {
 
 	/**
 	 * @param {CartProduct} cartProduct
+	 * @returns {Cart}
 	 */
 	addProduct(cartProduct) {
-		const previousCartProduct = this.#products.get(cartProduct.getProductId().getValue());
+		const updatedProducts = new Map(this.#products);
+		const previousCartProduct = updatedProducts.get(cartProduct.getProductId().getValue());
 		if (previousCartProduct) {
 			const newQuantity = previousCartProduct.getQuantity() + cartProduct.getQuantity();
-			this.#products.set(cartProduct.getProductId().getValue(), new CartProduct({
+			updatedProducts.set(cartProduct.getProductId().getValue(), new CartProduct({
 				productId: cartProduct.getProductId(),
 				quantity: newQuantity
 			}));
 		} else {
-			this.#products.set(cartProduct.getProductId().getValue(), cartProduct);
+			updatedProducts.set(cartProduct.getProductId().getValue(), cartProduct);
 		}
+		return new Cart({ id: this.#id, products: updatedProducts });
 	}
 
 	toJson() {
 		return {
 			id: this.#id.getValue(),
-			products: this.#products.map(product => product.toJson())
+			products: Array.from(this.#products.values()).map(product => product.toJson())
 		};
 	}
 
