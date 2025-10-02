@@ -2,6 +2,7 @@ const Product = require("../../../domain/Product");
 const ProductId = require("../../../domain/value_objects/ProductId");
 const ProductManager = require("../../persistence/ProductManager");
 const CreateProductRequest = require("./CreateProductRequest");
+const CreateProductResponse = require("./CreateProductResponse");
 
 class CreateProductUseCase {
 	#productManager;
@@ -18,8 +19,9 @@ class CreateProductUseCase {
 	 * @param {CreateProductRequest} createProductRequest
 	 */
 	async execute(createProductRequest) {
+		const productId = ProductId.generate();
 		await this.#productManager.save(new Product({
-			id: ProductId.generate(),
+			id: productId,
 			title: createProductRequest.getTitle(),
 			description: createProductRequest.getDescription(),
 			code: createProductRequest.getCode(),
@@ -29,6 +31,7 @@ class CreateProductUseCase {
 			category: createProductRequest.getCategory(),
 			thumbnails: createProductRequest.getThumbnails()
 		}));
+		return new CreateProductResponse(productId);
 	}
 }
 
