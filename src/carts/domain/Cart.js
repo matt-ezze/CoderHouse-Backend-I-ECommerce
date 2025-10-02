@@ -8,8 +8,10 @@ class Cart {
 	 */
 	static fromJson(json) {
 		const id = new CartId(json.id);
-		const products = json.products.map(productJson => CartProduct.fromJson(productJson));
-		return new Cart({ id, products });
+		const products = Object
+			.entries(json.products)
+			.map(([productId, quantity]) => [productId, new CartProduct(productId, quantity)]);
+		return new Cart({ id, products: new Map(products) });
 	}
 
 	#id;
@@ -18,13 +20,11 @@ class Cart {
 	/**
 	 * @param {Object} param
 	 * @param {CartId} param.id
-	 * @param {CartProduct[]|Map<string, CartProduct>} param.products
+	 * @param {Map<string, CartProduct>} param.products
 	 */
 	constructor({ id, products }) {
 		this.#id = id;
-		this.#products = Array.isArray(products)
-			? this.#createProductMap(products)
-			: products;
+		this.#products = products;
 	}
 
 	/**
@@ -60,12 +60,19 @@ class Cart {
 	toJson() {
 		return {
 			id: this.#id.getValue(),
-			products: Array.from(this.#products.values()).map(product => product.toJson())
+			products: Object.fromEntries(
+				Array
+					.from(this.#products.entries())
+					.map(([productId, product]) => ([
+						productId,
+						product.getQuantity()
+					]))
+			)
 		};
 	}
 
 	/**
-	 * @param {Cart} other 
+	 * @param {Cart} other
 	 * @returns {boolean}
 	 */
 	isEqual(other) {
@@ -81,17 +88,6 @@ class Cart {
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * @param {CartProduct[]} products 
-	 */
-	#createProductMap(products) {
-		const map = new Map();
-		for (const product of products) {
-			map.set(product.getId(), product);
-		}
-		return map;
 	}
 }
 

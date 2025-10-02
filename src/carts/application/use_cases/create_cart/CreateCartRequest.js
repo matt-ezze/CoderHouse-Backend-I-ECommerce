@@ -7,24 +7,24 @@ class CreateCartRequest {
 	 * @returns {CreateCartRequest}
 	 */
 	static fromJson(json) {
-		if (!Array.isArray(json)) {
-			throw new InvalidJsonSchemaException('Expected an array of products');
-		}
-		const products = json.map(productJson => CartProduct.fromJson(productJson));
-		return new CreateCartRequest(products);
+		return new CreateCartRequest(new Map(
+			Object
+				.entries(json)
+				.map(([productId, quantity]) => [productId, new CartProduct(productId, quantity)])
+		));
 	}
 
 	#products;
 
 	/**
-	 * @param {CartProduct[]} products 
+	 * @param {Map<CartProduct>} products
 	 */
 	constructor(products) {
 		this.#products = products;
 	}
 
 	/**
-	 * @returns {CartProduct[]}
+	 * @returns {Map<CartProduct>}
 	 */
 	getProducts() {
 		return this.#products;
