@@ -6,10 +6,14 @@ class ProductDescription {
 	#value;
 
 	/**
-	 * @param {string} value 
+	 * @param {string|null} [value]
 	 */
 	constructor(value) {
-		this.#validateValue(value);
+		if (value === undefined || value === null) {
+			value = '';
+		} else {
+			this.#validateValue(value);
+		}
 		this.#value = value;
 	}
 
@@ -18,6 +22,10 @@ class ProductDescription {
 	 */
 	getValue() {
 		return this.#value;
+	}
+
+	isEmpty() {
+		return this.#value.length === 0;
 	}
 
 	/**
