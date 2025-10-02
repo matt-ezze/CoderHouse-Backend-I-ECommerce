@@ -95,7 +95,7 @@ class Cart {
 	#createProductMap(products) {
 		const map = new Map();
 		for (const product of products) {
-			map.set(product.getProductId().getValue(), product);
+			map.set(product.getId(), product);
 		}
 		return map;
 	}
