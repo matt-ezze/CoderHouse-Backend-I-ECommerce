@@ -25,7 +25,7 @@ router.post('/carts', async (req, res) => {
 		await Promise.all(request.getProducts().values().map(product => checkProductExists(new ProductId(product.getId()))));
 		const response = await createCartUseCase.execute(CreateCartRequest.fromJson(req.body));
 		res.status(201).json({
-			message: 'Product created successfully',
+			message: 'Cart created successfully',
 			cartId: response.getCartId().getValue()
 		});
 	} catch (error) {
@@ -60,7 +60,7 @@ router.post('/carts/:cartId/product/:productId', async (req, res) => {
 			}
 		}));
 		res.status(201).json({
-			message: 'Product added to cart successfully'
+			message: 'Product added to the cart successfully'
 		});
 	} catch (error) {
 		if (error instanceof InvalidCartPropertyException) {
