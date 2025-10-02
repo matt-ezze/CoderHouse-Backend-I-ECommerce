@@ -1,6 +1,10 @@
 const InvalidProductPropertyException = require("./InvalidProductPropertyException");
 
 class InvalidProductTitleException extends InvalidProductPropertyException {
+	static getTitleMustBeString() {
+		return new InvalidProductTitleException('Product title must be a string.');
+	}
+
 	/**
 	 * @returns {InvalidProductTitleException}
 	 */

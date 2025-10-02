@@ -27,6 +27,9 @@ class ProductPrice {
 	}
 
 	#validateValue(value) {
+		if (typeof value !== 'number' || isNaN(value)) {
+			throw InvalidProductPriceException.getInvalidType();
+		}
 		if (value < 0) {
 			throw InvalidProductPriceException.getPriceCannotBeNegative();
 		}

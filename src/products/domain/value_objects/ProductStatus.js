@@ -1,3 +1,5 @@
+const InvalidProductStatusException = require("../exceptions/InvalidProductStatusException");
+
 class ProductStatus {
 	#value;
 
@@ -5,6 +7,7 @@ class ProductStatus {
 	 * @param {boolean} value 
 	 */
 	constructor(value) {
+		this.#validateValue(value);
 		this.#value = value;
 	}
 
@@ -21,6 +24,12 @@ class ProductStatus {
 	 */
 	isEqual(other) {
 		return this.#value === other.getValue();
+	}
+
+	#validateValue(value) {
+		if (typeof value !== 'boolean') {
+			throw InvalidProductStatusException.getInvalidType();
+		}
 	}
 }
 

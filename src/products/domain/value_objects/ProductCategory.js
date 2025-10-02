@@ -32,6 +32,12 @@ class ProductCategory {
 	 * @param {string} value
 	 */
 	#validateValue(value) {
+		if (typeof value !== 'string') {
+			throw InvalidProductCategory.getCategoryNotAString();
+		}
+		if (value.trim().length === 0) {
+			throw InvalidProductCategory.getCategoryIsEmpty();
+		}
 		if (value.length > ProductCategory.MAX_LENGTH) {
 			throw InvalidProductCategory.getCategoryExceedsMaxLength(ProductCategory.MAX_LENGTH);
 		}

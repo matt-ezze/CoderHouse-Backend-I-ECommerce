@@ -1,3 +1,5 @@
+const InvalidProductThumbnail = require("../exceptions/InvalidProductThumbnail");
+
 class ProductThumbnail {
 	#value;
 
@@ -5,7 +7,8 @@ class ProductThumbnail {
 	 * @param {string|URL} value 
 	 */
 	constructor(value) {
-		this.#value = typeof value === 'string' ? new URL(value) : value;
+		this.#validateValue(value);
+		this.#value = new URL(value);
 	}
 
 	/**
@@ -21,6 +24,14 @@ class ProductThumbnail {
 	 */
 	isEqual(other) {
 		return this.#value === other.getValue();
+	}
+
+	#validateValue(value) {
+		try {
+			new URL(value);
+		} catch (e) {
+			throw InvalidProductThumbnail.getProductThumbnailIsAnInvalidUrl();
+		}
 	}
 }
 

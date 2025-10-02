@@ -29,6 +29,9 @@ class ProductTitle {
 	}
 
 	#validateValue(value) {
+		if (typeof value !== 'string') {
+			throw InvalidProductTitleException.getTitleMustBeString();
+		}
 		if (value.length === 0) {
 			throw InvalidProductTitleException.getTitleCannotBeEmpty();
 		}

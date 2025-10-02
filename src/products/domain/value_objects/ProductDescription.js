@@ -30,6 +30,9 @@ class ProductDescription {
 	}
 
 	#validateValue(value) {
+		if (typeof value !== "string") {
+			throw InvalidProductDescriptionException.getDescriptionIsNotAString();
+		}
 		if (value.length > ProductDescription.MAX_LENGTH) {
 			throw InvalidProductDescriptionException.getDescriptionExceedsMaxLength(ProductDescription.MAX_LENGTH);
 		}

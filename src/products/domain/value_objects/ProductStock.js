@@ -27,6 +27,9 @@ class ProductStock {
 	}
 
 	#validateValue(value) {
+		if (typeof value !== 'number' || isNaN(value)) {
+			throw InvalidProductStockException.getProductStockMustBeNumber();
+		}
 		if (value < 0) {
 			throw InvalidProductStockException.getProductStockCannotBeNegative();
 		}
