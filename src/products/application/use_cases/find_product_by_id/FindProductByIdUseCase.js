@@ -1,4 +1,5 @@
 const ProductNotFoundException = require("../exceptions/ProductNotFoundException");
+const FindProductByIdRequest = require("./FindProductByIdRequest");
 const FindProductResponse = require("./FindProductByIdResponse");
 
 class FindProductByIdUseCase {
@@ -8,6 +9,11 @@ class FindProductByIdUseCase {
 		this.#productManager = productManager;
 	}
 
+	/**
+	 * 
+	 * @param {FindProductByIdRequest} request 
+	 * @returns {Promise<FindProductResponse>}
+	 */
 	async execute(request) {
 		const product = await this.#productManager.findById(request.getId());
 		if (!product) {

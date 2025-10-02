@@ -16,7 +16,7 @@ class CreateProductUseCase {
 	}
 
 	/**
-	 * @param {CreateProductRequest} createProductRequest
+	 * @param {Promise<CreateProductRequest>} createProductRequest
 	 */
 	async execute(createProductRequest) {
 		const productId = ProductId.generate();
