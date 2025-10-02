@@ -1,39 +1,111 @@
 const ProductCategory = require('../../../domain/value_objects/ProductCategory');
+const ProductCode = require('../../../domain/value_objects/ProductCode');
 const ProductDescription = require('../../../domain/value_objects/ProductDescription');
+const ProductPrice = require('../../../domain/value_objects/ProductPrice');
+const ProductStatus = require('../../../domain/value_objects/ProductStatus');
+const ProductStock = require('../../../domain/value_objects/ProductStock');
 const ProductTitle = require('../../../domain/value_objects/ProductTitle');
-const InvalidRequestSchemaException = require('../exceptions/InvalidRequestSchemaException');
-const zod = require('zod');
-
-const CreateProductRequestSchema = zod.object({
-	title: zod.string().min(1).max(ProductTitle.MAX_LENGTH),
-	description: zod.string().max(ProductDescription.MAX_LENGTH),
-	code: zod.string(),
-	price: zod.number().min(0),
-	status: zod.boolean(),
-	stock: zod.number().int().min(0),
-	category: zod.string().max(ProductCategory.MAX_LENGTH),
-	thumbnails: zod.array(zod.url())
-});
+const ProductThumbnail = require('../../../domain/value_objects/ProductThumbnail');
 
 class CreateProductRequest {
-	#data;
+	#title;
+	#description;
+	#code;
+	#price;
+	#status;
+	#stock;
+	#category;
+	#thumbnails;
 
-	/**
-	 * @param {Object} data
-	 */
-	constructor(data) {
-		const parseResult = CreateProductRequestSchema.safeParse(data);
-		if (!parseResult.success) {
-			throw new InvalidRequestSchemaException(parseResult.error.issues);
-		}
-		this.#data = parseResult.data;
+	static fromJson(json) {
+		return new CreateProductRequest({
+			title: new ProductTitle(data.title),
+			description: new ProductDescription(data.description),
+			code: new ProductCode(data.code),
+			price: new ProductPrice(data.price),
+			status: new ProductStatus(data.status),
+			stock: new ProductStock(data.stock),
+			category: new ProductCategory(data.category),
+			thumbnails: data.thumbnails?.map(thumbnail => new ProductThumbnail(thumbnail))
+		});
 	}
 
 	/**
-	 * @return {Object}
+	 * @param {Object} data
+	 * @param {ProductTitle} data.title
+	 * @param {ProductDescription} data.description
+	 * @param {ProductCode} data.code
+	 * @param {ProductPrice} data.price
+	 * @param {ProductStatus} data.status
+	 * @param {ProductStock} data.stock
+	 * @param {ProductCategory} data.category
+	 * @param {ProductThumbnail[]} [data.thumbnails]
 	 */
-	getData() {
-		return this.#data;
+	constructor(data) {
+		this.#title = data.title;
+		this.#description = data.description;
+		this.#code = data.code;
+		this.#price = data.price;
+		this.#status = data.status;
+		this.#stock = data.stock;
+		this.#category = data.category;
+		this.#thumbnails = data.thumbnails ?? [];
+	}
+
+	/**
+	 * @returns {ProductTitle}
+	 */
+	getTitle() {
+		return this.#title;
+	}
+
+	/**
+	 * @returns {ProductDescription}
+	 */
+	getDescription() {
+		return this.#description;
+	}
+
+	/**
+	 * @returns {ProductCode}
+	 */
+	getCode() {
+		return this.#code;
+	}
+
+	/**
+	 * @returns {ProductPrice}
+	 */
+	getPrice() {
+		return this.#price;
+	}
+
+	/**
+	 * @returns {ProductStatus}
+	 */
+	getStatus() {
+		return this.#status;
+	}
+
+	/**
+	 * @returns {ProductStock}
+	 */
+	getStock() {
+		return this.#stock;
+	}
+
+	/**
+	 * @returns {ProductCategory}
+	 */
+	getCategory() {
+		return this.#category;
+	}
+
+	/**
+	 * @returns {ProductThumbnail[]}
+	 */
+	getThumbnails() {
+		return this.#thumbnails;
 	}
 }
 
