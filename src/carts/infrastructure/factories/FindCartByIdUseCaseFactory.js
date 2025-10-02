@@ -1,5 +1,6 @@
 const FindCartByIdUseCase = require("../../application/use_cases/find_cart_by_id/FindCartByIdUseCase");
 const FileSystemCartManager = require("../persistence/FileSystemCartManager");
+const { CART_DB_PATH } = require("../../../config");
 
 class FindCartByIdUseCaseFactory {
 	static #instance;
@@ -15,7 +16,7 @@ class FindCartByIdUseCaseFactory {
 	}
 
 	static #getDbInstance() {
-		return new FileSystemCartManager(process.env.CARTS_PATH);
+		return new FileSystemCartManager(CART_DB_PATH);
 	}
 }
 

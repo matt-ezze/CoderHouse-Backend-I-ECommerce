@@ -1,5 +1,6 @@
 const FindAllProductsUseCase = require("../../application/use_cases/find_all_products/FindAllProductsUseCase");
 const FileSystemProductManager = require("../persistence/FileSystemProductManager");
+const { PRODUCT_DB_PATH } = require("../../../config");
 
 class FindAllProductsUseCaseFactory {
 	static #instance;
@@ -15,7 +16,7 @@ class FindAllProductsUseCaseFactory {
 	}
 
 	static #getDbInstance() {
-		return new FileSystemProductManager(process.env.PRODUCTS_PATH);
+		return new FileSystemProductManager(PRODUCT_DB_PATH);
 	}
 }
 
