@@ -1,19 +1,20 @@
 const express = require('express');
 const CreateProductRequest = require('../../../application/use_cases/create_product/CreateProductRequest');
-const InvalidRequestSchemaException = require('../../../application/use_cases/create_product/exceptions/InvalidRequestSchemaException');
 const CreateProductUseCaseFactory = require('../../factories/CreateProductUseCaseFactory');
+const InvalidProductPropertyException = require('../../../domain/exceptions/InvalidProductPropertyException');
 
 const router = express.Router();
 
 router.post('/products', async (req, res) => {
 	try {
 		const createUseCase = CreateProductUseCaseFactory.getInstance();
-		await createUseCase.execute(new CreateProductRequest(req.body));
+		await createUseCase.execute(CreateProductRequest.fromJson(req.body));
 		res.status(201).json({ message: 'Product created successfully' });
 	} catch (error) {
-		if (error instanceof InvalidRequestSchemaException) {
+		if (error instanceof InvalidProductPropertyException) {
 			res.status(400).json({
-				error: 'Request schema is invalid'
+				error: 'Request schema is invalid',
+				description: error.message
 			});
 			console.error(error);
 		} else {
