@@ -13,24 +13,28 @@ router.get('/carts/:cartId', async (req, res) => {
 	try {
 		const findCartByIdUseCase = FindCartByIdUseCaseFactory.getInstance();
 		const findProductByIdUseCase = FindProductByIdUseCaseFactory.getInstance();
-		const response = await findCartByIdUseCase.execute(
+		const findCartByIdResponse = await findCartByIdUseCase.execute(
 			new FindCartByIdRequest(new CartId(req.params.cartId))
 		);
+		const cart = findCartByIdResponse.getCart();
 		// Fixme: we create a promise for each product instead of perform one
 		// call to fetch all products in one go.
-		const responses = await Promise.all(response
-			.getCart()
+		const findAllProductsForCartResponse = await Promise.all(cart
 			.getProducts()
 			.values()
 			.map(product => findProductByIdUseCase.execute(new FindProductByIdRequest(new ProductId(product.getId()))))
 		);
+		const products = Object.fromEntries(findAllProductsForCartResponse.map(response => [
+			response.getProduct().getId().getValue(),
+			{
+				quantity: cart.getProducts().get(response.getProduct().getId().getValue()).getQuantity(),
+				detail: response.getProduct().toJson()
+			}
+		]));
 		res.status(200).json({
 			cart: {
-				...response.getCart().toJson(),
-				products: Object.fromEntries(responses.map(response => [
-					response.getProduct().getId().getValue(),
-					response.getProduct().toJson()
-				]))
+				id: cart.getId().getValue(),
+				products
 			}
 		});
 	} catch (error) {
