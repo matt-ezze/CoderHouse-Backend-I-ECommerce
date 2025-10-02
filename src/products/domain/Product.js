@@ -76,7 +76,7 @@ class Product {
 	 * @returns {Product}
 	 */
 	updateTitle(newTitle) {
-		return newTitle
+		return newTitle !== undefined
 			? new Product({
 				...this.#getValues(),
 				title: newTitle
@@ -96,7 +96,7 @@ class Product {
 	 * @returns {Product}
 	 */
 	updateDescription(newDescription) {
-		return newDescription
+		return newDescription !== undefined
 			? new Product({
 				...this.#getValues(),
 				description: newDescription
@@ -123,7 +123,7 @@ class Product {
 	 * @returns {Product}
 	 */
 	updatePrice(newPrice) {
-		return newPrice
+		return newPrice !== undefined
 			? new Product({
 				...this.#getValues(),
 				price: newPrice
@@ -143,7 +143,7 @@ class Product {
 	 * @returns {Product}
 	 */
 	updateStatus(newStatus) {
-		return newStatus
+		return newStatus !== undefined
 			? new Product({
 				...this.#getValues(),
 				status: newStatus
@@ -163,7 +163,7 @@ class Product {
 	 * @returns {Product}
 	 */
 	updateStock(newStock) {
-		return newStock
+		return newStock !== undefined
 			? new Product({
 				...this.#getValues(),
 				stock: newStock
@@ -183,7 +183,7 @@ class Product {
 	 * @returns {Product}
 	 */
 	updateCategory(newCategory) {
-		return newCategory
+		return newCategory !== undefined
 			? new Product({
 				...this.#getValues(),
 				category: newCategory
@@ -203,7 +203,7 @@ class Product {
 	 * @returns {Product}
 	 */
 	updateThumbnails(newThumbnails) {
-		return newThumbnails
+		return newThumbnails !== undefined
 			? new Product({
 				...this.#getValues(),
 				thumbnails: newThumbnails
