@@ -1,7 +1,7 @@
 const ProductCategory = require('../../../domain/value_objects/ProductCategory');
 const ProductDescription = require('../../../domain/value_objects/ProductDescription');
 const ProductTitle = require('../../../domain/value_objects/ProductTitle');
-const InvalidRequestSchemaException = require('./exceptions/InvalidRequestSchemaException');
+const InvalidRequestSchemaException = require('../exceptions/InvalidRequestSchemaException');
 const zod = require('zod');
 
 const CreateProductRequestSchema = zod.object({
