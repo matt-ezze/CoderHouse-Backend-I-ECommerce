@@ -1,5 +1,4 @@
 const CartProduct = require("../../../domain/value_objects/CartProduct");
-const InvalidJsonSchemaException = require("./exceptions/InvalidJsonSchemaException");
 
 class CreateCartRequest {
 	/**
@@ -17,14 +16,14 @@ class CreateCartRequest {
 	#products;
 
 	/**
-	 * @param {Map<CartProduct>} products
+	 * @param {Map<string, CartProduct>} products
 	 */
 	constructor(products) {
 		this.#products = products;
 	}
 
 	/**
-	 * @returns {Map<CartProduct>}
+	 * @returns {Map<string, CartProduct>}
 	 */
 	getProducts() {
 		return this.#products;
