@@ -9,7 +9,10 @@ router.post('/products', async (req, res) => {
 	try {
 		const createUseCase = CreateProductUseCaseFactory.getInstance();
 		const response = await createUseCase.execute(CreateProductRequest.fromJson(req.body));
-		res.status(201).json({ message: `Product created successfully: ${response.getProductId().getValue()}` });
+		res.status(201).json({
+			message: 'Product created successfully',
+			productId: response.getProductId().getValue()
+		});
 	} catch (error) {
 		if (error instanceof InvalidProductPropertyException) {
 			res.status(400).json({
