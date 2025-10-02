@@ -39,6 +39,18 @@ class FileSystemCartManager extends CartManager {
 		return Cart.fromJson(cartData);
 	}
 
+	/**
+	 * @override
+	 * @param {ProductId} productId
+	 * @returns {Promise<Cart[]>}
+	 */
+	async findAllCartsWithProduct(productId) {
+		const carts = await this.#loadDbFile();
+		return Object.values(carts)
+			.map(cartData => Cart.fromJson(cartData))
+			.filter(cart => cart.hasProduct(productId));
+	}
+
 	async #loadDbFile() {
 		const data = await fs.promises.readFile(this.#path);
 		return JSON.parse(data);
