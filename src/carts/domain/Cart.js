@@ -47,15 +47,12 @@ class Cart {
 	 */
 	addProduct(cartProduct) {
 		const updatedProducts = new Map(this.#products);
-		const previousCartProduct = updatedProducts.get(cartProduct.getProductId().getValue());
+		const previousCartProduct = updatedProducts.get(cartProduct.getId());
 		if (previousCartProduct) {
 			const newQuantity = previousCartProduct.getQuantity() + cartProduct.getQuantity();
-			updatedProducts.set(cartProduct.getProductId().getValue(), new CartProduct({
-				productId: cartProduct.getProductId(),
-				quantity: newQuantity
-			}));
+			updatedProducts.set(cartProduct.getId(), new CartProduct(cartProduct.getId(), newQuantity));
 		} else {
-			updatedProducts.set(cartProduct.getProductId().getValue(), cartProduct);
+			updatedProducts.set(cartProduct.getId(), cartProduct);
 		}
 		return new Cart({ id: this.#id, products: updatedProducts });
 	}
