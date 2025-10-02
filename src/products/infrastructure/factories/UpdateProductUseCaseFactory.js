@@ -15,7 +15,7 @@ class UpdateProductUseCaseFactory {
 	}
 
 	static #getDbInstance() {
-		return new FileSystemProductManager(process.env.DB_PATH);
+		return new FileSystemProductManager(process.env.PRODUCTS_PATH);
 	}
 }
 
