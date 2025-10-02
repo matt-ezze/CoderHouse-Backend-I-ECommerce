@@ -1,7 +1,7 @@
-const express = require('express');
 const CreateCartUseCaseFactory = require('../../factories/CreateCartUseCaseFactory');
 const CreateCartRequest = require('../../../application/use_cases/create_cart/CreateCartRequest');
 const InvalidJsonSchemaException = require('../../../application/use_cases/create_cart/exceptions/InvalidJsonSchemaException');
+const express = require('express');
 
 const router = express.Router();
 
