@@ -1,9 +1,11 @@
+const get = require('./routes/Get');
 const post = require('./routes/Post');
 
 /**
  * @param {Express} app
  */
 const configureCartsApi = function (app) {
+	app.use('/api', get);
 	app.use('/api', post);
 }
 
