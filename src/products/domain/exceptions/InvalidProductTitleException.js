@@ -1,4 +1,6 @@
-class InvalidProductTitleException extends Error {
+const InvalidProductPropertyException = require("./InvalidProductPropertyException");
+
+class InvalidProductTitleException extends InvalidProductPropertyException {
 	/**
 	 * @returns {InvalidProductTitleException}
 	 */

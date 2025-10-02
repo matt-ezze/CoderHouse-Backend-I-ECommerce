@@ -1,4 +1,6 @@
-class InvalidProductCategory extends Error {
+const InvalidProductPropertyException = require("./InvalidProductPropertyException");
+
+class InvalidProductCategory extends InvalidProductPropertyException {
 	static getCategoryExceedsMaxLength(maxLength) {
 		return new InvalidProductCategory(`Category exceeds maximum length of ${maxLength} characters.`);
 	}

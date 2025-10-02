@@ -1,4 +1,6 @@
-class InvalidProductStockException extends Error {
+const InvalidProductPropertyException = require("./InvalidProductPropertyException");
+
+class InvalidProductStockException extends InvalidProductPropertyException {
 	static getProductStockCannotBeNegative() {
 		return new InvalidProductStockException("Product stock cannot be negative");
 	}
